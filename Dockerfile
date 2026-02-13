@@ -1,10 +1,15 @@
 FROM node:22-bookworm
 
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
+
 # Install Bun (required for build scripts)
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
-RUN corepack enable
+#RUN corepack enable
+RUN npm config set registry https://registry.npmmirror.com
+RUN npm install -g pnpm@latest
+RUN pnpm config set registry https://registry.npmmirror.com
 
 WORKDIR /app
 
